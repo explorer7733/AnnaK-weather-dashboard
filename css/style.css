@@ -1,0 +1,30 @@
+/*CSS variables*/
+:root {
+    --dark-blue: #07131e;
+    --aqua:#53EFE9;
+    --white: white;
+    --cambria: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+    --italic: italic;
+}
+
+body {
+    background-color: var(--dark-blue);
+}
+
+main {
+    color: var(--aqua);
+}
+
+/*CSS for header h1*/
+h1 {
+  font-size: 2em;
+  margin: 0.67em 0;
+  background-color: var(--aqua);
+  color: var(--dark-blue);
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  padding-top: 15px;
+  padding-bottom: 15px;
+  border-radius: 5px;
+}
