@@ -5,6 +5,6 @@ const weatherApiKey = "f6c9d2164ce729074aa0a044b7c73a36";
 
 /*we wll collect user input for the city name and in stire it in varibale let city =    ; */
 /*need to specify state & country variables in API call */
-let cityName = 
+/*let cityName = 
 let stateName = 
-let countryName =
+let countryName =*/
