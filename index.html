@@ -18,21 +18,42 @@
             <h1><span>Weather Dashboard</span></h1>
         </header>
 
-        <main class="container-fluid" >
+        <main class="container-fluid">
             <!--search form-->
             <div class="card">
-                <h2 class="card-header">Search for a City:</h2>
-                <form id="search-form" class="card-body">
-                    <input type="text" id="citySearch" placeholder="search for a city">
-                    <button type="submit" class="btn">Search</button>
-                </form>
+                <div class="row">
+                    <div class="col-sm-3">
+                        <h2 class="card-header">Search for a City:</h2>
+                        <form id="search-form" class="card-body">
+                            <input type="text" id="citySearch" placeholder="search for a city">
+                            <button type="submit" id="searchButton" class="btn">Search</button>
+                        </form>
+                        <!--click button for each city-->
+                        <div id="cityButton" class="city-button"></div><!--should it be outside of class="card"???-->
+                    </div>
+                </div>               
+            </div>         
+    
+            <!--weather today and 5-days forecast cards-->
+            <div class="container">
+                <div class="row">
+                    <div class="col-sm-9">
+                        <!--weather today-->
+                        <h3 class="container-header">Weather Today</h3>
+                        <div id="weatherTodayContainer" class="weather-today">
+                            <h4 id="cityName" class="cityName"></h4> <!--!!!!!!!!!!insert img icon-->
+                            <div id="dateToday" class="dateToday"></div>
+                            <div id="temp" class="temp"></div>
+                            <div id="wind" class="wind"></div>
+                            <div id="humidity" class="humidity"></div>
+                        </div>
+                        <!--5-days forecast-->
+                        <div id="fiveDaysForecast" class="five-days-forecast-cards"></div><!--should it be outside of class="container"?-->
+                    </div>
+                </div>
             </div>
-
-
-
-
         </main>
-
+    
         <script src="./assets/js/script.js"></script>
     </body>
     </html>
