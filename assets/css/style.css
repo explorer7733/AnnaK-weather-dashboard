@@ -1,3 +1,11 @@
+:root {
+  --dark-blue: #07131e;
+  --aqua:#53EFE9;
+  --white: white;
+  --cambria: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+  --italic: italic;
+}
+
 body {
     background-color: var(--dark-blue);
     color: var(--aqua);
@@ -22,3 +30,16 @@ h1 {
   margin-left: 15px;
   margin-right: 15px;
 }
+
+/*CSS for search card*/
+.card {
+  margin-top: 20px;
+  margin-left: 5px;
+  background-color: var(--aqua);
+  color: var(--dark-blue);
+}
+
+.card-header{
+  font-size: 1.5em;
+}
+
