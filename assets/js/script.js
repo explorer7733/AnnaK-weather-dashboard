@@ -5,8 +5,6 @@ const searchFormEl = document.querySelector('#search-form');
 const cityInputEl = document.querySelector('#citySearch');
 const weatherContainerEl = document.querySelector('#weatherTodayContainer');
 
-/*??????create any other variables?*/
-
 /*Create formSubmitHandler function*/
 const formSubmitHandler = function (event) {
     event.preventDefault();
@@ -27,44 +25,53 @@ const formSubmitHandler = function (event) {
 /*need to specify state & country variables in API call */
 
 const getWeatherToday = function (city) {
-    const queryURL = `http://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${weatherApiKey}`;
+    const queryURL = `http://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${weatherApiKey}`; 
 
     fetch(queryURL)
-    .then(function(responce) {
-        if (responce.ok) {
-            return responce.json();
+    .then(function(response) {
+        if (!response.ok) {
+          throw new Error('City not found');
+          }
+        return response.json();
         }
-    })
+    )
 
     .then(function(data) {
         console.log(data);
         let lat = data.coord.lat;
         let lon = data.coord.lon;
 
-        fetch(`http://api.openweathermap.org/data/2.5/weather?q=${lat}&${lon}=${weatherApiKey}`)
-        .then(function(responce) {
-            if (responce.ok) {
-                return responce.json();
+        fetch(`http://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${weatherApiKey}`)
+        .then(function(response) {
+            if (response.ok) {
+             throw new Error('Weather data not found');
             }
-        })
+            return response.json();
+            }
+        )
+
         .then(function(data) {
             console.log(data);
-            let cityName = data.name;
-            let icon = data.icon;  /*????how add icon: "04n" / "02n" etc - sun, clouds, rain */
+            displayWeather(data);
+           /* let cityName = data.name;
+            let icon = data.icon;  /*????how add icon: "04n" / "02n" etc - sun, clouds, rain 
             let temp = data.temp;
             let wind = data.wind;
             let humidity = data.humidity;
-            let forecast = data.items[0].weather[0];         
+            let forecast = data.items[0].weather[0];*/       
+        })
+        .catch(function(error){
+            console.error('error fetching weather data',error);
         })
     })
-
 };
 
-/*create function 5 days forecast - using for loop*/
+/*create function 5 days forecast - using for loop WORK ON IT*/
+    const displayWeather = function(data, )
 
 
 
-/*Create function to save cities in local storage */
+/*Create function to save cities in local storage NEEDS EDITING*/
 let citiesList = JSON.parse(localStorage.getItem('cities')) || [];
 
 function getCitiesFromLocalStorage() {
@@ -73,7 +80,7 @@ function getCitiesFromLocalStorage() {
 }
 
 
-/*Create buttonClickHnadler function each city*/
+/*Create buttonClickHnadler function each city NEEDS EDITING*/
 const cityButtons = document.querySelector('#cityButton');
 
 const buttonClickHandler = function (event) {
