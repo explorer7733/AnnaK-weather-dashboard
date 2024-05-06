@@ -53,7 +53,8 @@ const getWeatherToday = function (city) {
         .then(function(data) {
             console.log(data);
             displayWeather(data);
-           /* let cityName = data.name;
+           /* NOT SURE IF THESE VARIABLES ARE NEEDED
+            let cityName = data.name;
             let icon = data.icon;  /*????how add icon: "04n" / "02n" etc - sun, clouds, rain 
             let temp = data.temp;
             let wind = data.wind;
@@ -66,7 +67,7 @@ const getWeatherToday = function (city) {
     })
 };
 
-/*create function 5 days forecast - using for loop WORK ON IT*/
+/*create function 5 days forecast - using for loop NEEDS EDITING*/
     const displayWeather = function(data, )
 
 
@@ -80,7 +81,7 @@ function getCitiesFromLocalStorage() {
 }
 
 
-/*Create buttonClickHnadler function each city NEEDS EDITING*/
+/*Create buttonClickHandler function each city NEEDS EDITING*/
 const cityButtons = document.querySelector('#cityButton');
 
 const buttonClickHandler = function (event) {
