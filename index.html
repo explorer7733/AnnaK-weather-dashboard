@@ -22,7 +22,7 @@
             <!--search form-->
             <div class="card">
                 <div class="row">
-                    <div class="col-sm-3">
+                    <div class="col-sm-3 m-1">
                         <h2 class="card-header">Search for a City:</h2>
                         <form id="search-form" class="card-body">
                             <input type="text" id="citySearch" placeholder="search for a city">
@@ -31,13 +31,8 @@
                         <!--click button for each city-->
                         <div id="cityButton" class="city-button"></div>
                     </div>
-                </div>               
-            </div>         
-    
-            <!--weather today and 5-days forecast cards-->
-            <div class="container">
-                <div class="row">
-                    <div class="col-sm-9">
+
+                    <div class="col-sm-8">
                         <!--weather today-->
                         <h3 class="container-header">Weather Today</h3>
                         <div id="weatherTodayContainer" class="weather-today">
@@ -49,11 +44,12 @@
                             <div id="humidity" class="humidity"></div>
                         </div>
                         <!--<div id="cityButton" class="city-button"></div>-->
-                        <!--5-days forecast-->
-                        <div id="fiveDaysForecast" class="five-days-forecast-cards"></div>
+                        <!--5-days forecast FORMAT WITH BOOTSTRAP -->
+                        <div id="fiveDaysForecast" class="five-days-forecast-cards"></div> 
                     </div>
-                </div>
-            </div>
+                </div>               
+            </div>         
+
         </main>
     
         <script src="./assets/js/script.js"></script>
