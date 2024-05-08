@@ -12,7 +12,7 @@ const formSubmitHandler = function (event) {
     let cityName = cityInputEl.value.trim();
 
     if (cityName) {
-        getWeatherToday(cityName);
+        getWeather(cityName);
 
         weatherContainerEl.textContent = '';
         cityInputEl.value = '';
@@ -24,8 +24,8 @@ const formSubmitHandler = function (event) {
 /*Create function to make the API call using fetch() method */
 /*need to specify state & country variables in API call */
 
-const getWeatherToday = function (city) {
-    const queryURL = `http://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${weatherApiKey}`; 
+const getWeather = function (city) {
+    const queryURL = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${weatherApiKey}`; 
 
     fetch(queryURL)
     .then(function(response) {
@@ -41,57 +41,145 @@ const getWeatherToday = function (city) {
         let lat = data.coord.lat;
         let lon = data.coord.lon;
 
-        fetch(`http://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${weatherApiKey}`)
+        const forecastURL = `https://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&appid=${weatherApiKey}`
+
+        fetch(forecastURL)
         .then(function(response) {
-            if (response.ok) {
+            if (!response.ok) {
              throw new Error('Weather data not found');
             }
+
             return response.json();
             }
         )
 
         .then(function(data) {
-            console.log(data);
-            displayWeather(data);
-           /* NOT SURE IF THESE VARIABLES ARE NEEDED
-            let cityName = data.name;
-            let icon = data.icon;  /*????how add icon: "04n" / "02n" etc - sun, clouds, rain 
-            let temp = data.temp;
-            let wind = data.wind;
-            let humidity = data.humidity;
-            let forecast = data.items[0].weather[0];*/       
+            
+            renderForecast(data, city);           
         })
         .catch(function(error){
-            console.error('error fetching weather data',error);
+            console.error('error fetching weather data', error);
         })
     })
 };
 
-/*create function 5 days forecast - using for loop NEEDS EDITING*/
-    const displayWeather = function(data, )
+/*Create today weather forecast function*/
+    const createTodayWeatherCard = function(day, city) {
 
+        const formattedDate = day.dt_txt.split(' ')[0];
+        let todayWeatherCardContainer = $('#weatherTodayContainer');
 
+        /*add card*/
+        const cardBody = $('<div>').addClass('card-body');
+        const card = $('<div>').addClass('card w-75 mx-auto mb-3');
+        const header = $('<div>').text(`${city} (${formattedDate})`).addClass('card-header h3');
+        /*add icon and source for icon*/
+        const icon = $('<img>').addClass('icon');
+            icon.attr('src', 'https://openweathermap.org/img/wn/${day.weather[0].icon}@2x.png');
+        
+        const temp = $('<div>').addClass('card-text').text(`Temp: ${day.main.temp}`);
+        const wind = $('<div>').addClass('card-text').text(`Wind: ${day.wind.speed}`);
+        const humidity = $('<div>').addClass('card-text').text(`Humidity: ${day.main.humidity}`);
 
-/*Create function to save cities in local storage NEEDS EDITING*/
-let citiesList = JSON.parse(localStorage.getItem('cities')) || [];
+        cardBody.append(header, icon, temp, wind, humidity);
+        card.append(cardBody);
+        todayWeatherCardContainer.append(card);
+    }
+ 
+/*Create cards and 5-days forecast function using for loop*/
+    const createForecastCard = function(day, cardsContainer) {
 
-function getCitiesFromLocalStorage() {
-    let cities = JSON.parse(localStorage.getItem('cities')) || [];
-    return cities;    
-}
+        const formattedDate = day.dt_txt.split(' ')[0];
+       
+        /*add card*/
+        const cardBody = $('<div>').addClass('card-body');
+        const card = $('<div>').addClass('card w-75 mx-auto mb-3');
+        const icon = $('<img>').addClass('icon');
+            icon.attr('src', 'https://openweathermap.org/img/wn/${day.weather[0].icon}@2x.png');
+        const date = $('<div>').addClass('card-header p').text(formattedDate);
+        const temp = $('<div>').addClass('card-text').text(`Temp: ${day.main.temp}`);
+        const wind = $('<div>').addClass('card-text').text(`Wind: ${day.wind.speed}`);
+        const humidity = $('<div>').addClass('card-text').text(`Humidity: ${day.main.humidity}`);
 
+        cardBody.append(date, icon, temp, wind, humidity);
+        card.append(cardBody);
+        cardsContainer.append(card);
+    }
 
-/*Create buttonClickHandler function each city NEEDS EDITING*/
-const cityButtons = document.querySelector('#cityButton');
+    /*add button*/
+    const generateButtons = function(city) {
+        console.log(city);
 
+        let cityButtons = $('#cityButton');
+
+        if ($('#' + city).length === 0) {
+            const button = $('<button>').addClass('btn').attr('id', city).text(city);
+            button.on('click', buttonClickHandler);
+            cityButtons.append(button);
+        } else {
+            console.log('Button already exists for city: ' + city);
+        }
+    }
+
+    function renderForecast(forecastData, city) {
+        console.log(forecastData);
+
+        localStorage.setItem(city, JSON.stringify(forecastData));
+
+        let cardsContainer = $('#fiveDaysForecast');
+        cardsContainer.empty();
+
+        let todayWeatherCardContainer = $('#weatherTodayContainer');
+        todayWeatherCardContainer.empty();
+
+        const todayDate = new Date().toISOString().split('T')[0];
+
+        let todayWeather = null;
+
+        for (item of forecastData.list) {
+            if (item.dt_txt.includes(todayDate)) {
+                todayWeather = item;
+                break;
+            }
+        }
+
+        createTodayWeatherCard(todayWeather, city);
+
+        let forecastDates = [todayDate];
+        let cardsRendered = 1;
+
+        for (day of forecastData.list) {
+
+            const forecastDate = day.dt_txt.split(' ')[0];
+
+            if (!forecastDates.includes(forecastDate) && cardsRendered <= 5) {
+                forecastDates.push(forecastDate);
+                cardsContainer.append(createForecastCard(day, cardsContainer));
+                cardsRendered++;
+            }
+        }
+        generateButtons(city);
+
+    }
+
+/*Create buttonClickHandler function each city*/
 const buttonClickHandler = function (event) {
         event.preventDefault();
 
+        const city = event.target.id;
+        console.log("city: ", city);
 
-        
+        let cityData = JSON.parse(localStorage.getItem(city));
+
+        if (cityData) {
+            renderForecast(cityData, city);
+        } else {
+            getWeather(city);
+        }        
 };
 
-
 /*Add addEventListener*/
+const cityButtons = document.querySelector('#cityButton');
+
 searchFormEl.addEventListener('submit', formSubmitHandler);
 cityButtons.addEventListener('click', buttonClickHandler);
