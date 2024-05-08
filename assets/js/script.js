@@ -46,9 +46,8 @@ const getWeather = function (city) {
         fetch(forecastURL)
         .then(function(response) {
             if (!response.ok) {
-             throw new Error('Weather data not found');
-            }
-
+              throw new Error('Weather data not found');
+              }
             return response.json();
             }
         )
@@ -110,7 +109,7 @@ const getWeather = function (city) {
     const generateButtons = function(city) {
         console.log(city);
 
-        let cityButtons = $('#cityButton');
+        /*let cityButtons = $('#cityButton');
 
         if ($('#' + city).length === 0) {
             const button = $('<button>').addClass('btn').attr('id', city).text(city);
@@ -118,7 +117,12 @@ const getWeather = function (city) {
             cityButtons.append(button);
         } else {
             console.log('Button already exists for city: ' + city);
-        }
+        }*/
+
+        let cardsContainer = $('#cityButton');
+        const button = $('<button>').addClass('btn').attr('id', city).text(city);
+            button.on('click', buttonClickHandler);
+            cityButtons.append(button);
     }
 
     function renderForecast(forecastData, city) {
