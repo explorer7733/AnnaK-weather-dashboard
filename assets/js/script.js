@@ -5,6 +5,7 @@ const searchFormEl = document.querySelector('#search-form');
 const cityInputEl = document.querySelector('#citySearch');
 const weatherContainerEl = document.querySelector('#weatherTodayContainer');
 
+
 /*Create formSubmitHandler function*/
 const formSubmitHandler = function (event) {
     event.preventDefault();
@@ -12,8 +13,14 @@ const formSubmitHandler = function (event) {
     let cityName = cityInputEl.value.trim();
 
     if (cityName) {
+        let cityList = JSON.parse(localStorage.getItem('city'));
+            if (!Array.isArray(cityList)) {
+            cityList = [];
+        }
+        generateButtons(cityName);
         getWeather(cityName);
-
+        cityList.push(cityName);
+        localStorage.setItem('city', JSON.stringify(cityList));
         weatherContainerEl.textContent = '';
         cityInputEl.value = '';
     } else {
@@ -52,7 +59,7 @@ const getWeather = function (city) {
             }
         )
 
-        .then(function(data) {
+        .then(function(data) {      
             
             renderForecast(data, city);           
         })
@@ -122,13 +129,13 @@ const getWeather = function (city) {
         let cardsContainer = $('#cityButton');
         const button = $('<button>').addClass('btn').attr('id', city).text(city);
             button.on('click', buttonClickHandler);
-            cityButtons.append(button);
+            cardsContainer.append(button);
     }
 
     function renderForecast(forecastData, city) {
         console.log(forecastData);
 
-        localStorage.setItem(city, JSON.stringify(forecastData));
+        /*localStorage.setItem(city, JSON.stringify(forecastData));*/
 
         let cardsContainer = $('#fiveDaysForecast');
         cardsContainer.empty();
@@ -162,7 +169,7 @@ const getWeather = function (city) {
                 cardsRendered++;
             }
         }
-        generateButtons(city);
+       
 
     }
 
@@ -171,15 +178,10 @@ const buttonClickHandler = function (event) {
         event.preventDefault();
 
         const city = event.target.id;
-        console.log("city: ", city);
-
-        let cityData = JSON.parse(localStorage.getItem(city));
-
-        if (cityData) {
-            renderForecast(cityData, city);
-        } else {
-            getWeather(city);
-        }        
+        console.log("city: ", city);         
+           
+        getWeather(city);
+               
 };
 
 /*Add addEventListener*/
