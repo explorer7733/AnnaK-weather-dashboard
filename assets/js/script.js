@@ -5,7 +5,6 @@ const searchFormEl = document.querySelector('#search-form');
 const cityInputEl = document.querySelector('#citySearch');
 const weatherContainerEl = document.querySelector('#weatherTodayContainer');
 
-
 /*Create formSubmitHandler function*/
 const formSubmitHandler = function (event) {
     event.preventDefault();
@@ -81,7 +80,7 @@ const getWeather = function (city) {
         const header = $('<div>').text(`${city} (${formattedDate})`).addClass('card-header h3');
         /*add icon and source for icon*/
         const icon = $('<img>').addClass('icon');
-            icon.attr('src', 'https://openweathermap.org/img/wn/${day.weather[0].icon}@2x.png');
+            icon.attr('src', `https://openweathermap.org/img/w/${day.weather[0].icon}.png`);
         
         const temp = $('<div>').addClass('card-text').text(`Temp: ${day.main.temp}`);
         const wind = $('<div>').addClass('card-text').text(`Wind: ${day.wind.speed}`);
@@ -101,7 +100,7 @@ const getWeather = function (city) {
         const cardBody = $('<div>').addClass('card-body');
         const card = $('<div>').addClass('card w-75 mx-auto mb-3');
         const icon = $('<img>').addClass('icon');
-            icon.attr('src', 'https://openweathermap.org/img/wn/${day.weather[0].icon}@2x.png');
+            icon.attr('src', `https://openweathermap.org/img/w/${day.weather[0].icon}.png`);
         const date = $('<div>').addClass('card-header p').text(formattedDate);
         const temp = $('<div>').addClass('card-text').text(`Temp: ${day.main.temp}`);
         const wind = $('<div>').addClass('card-text').text(`Wind: ${day.wind.speed}`);
@@ -115,16 +114,6 @@ const getWeather = function (city) {
     /*add button*/
     const generateButtons = function(city) {
         console.log(city);
-
-        /*let cityButtons = $('#cityButton');
-
-        if ($('#' + city).length === 0) {
-            const button = $('<button>').addClass('btn').attr('id', city).text(city);
-            button.on('click', buttonClickHandler);
-            cityButtons.append(button);
-        } else {
-            console.log('Button already exists for city: ' + city);
-        }*/
 
         let cardsContainer = $('#cityButton');
         const button = $('<button>').addClass('btn').attr('id', city).text(city);
@@ -168,8 +157,7 @@ const getWeather = function (city) {
                 cardsContainer.append(createForecastCard(day, cardsContainer));
                 cardsRendered++;
             }
-        }
-       
+        }      
 
     }
 
