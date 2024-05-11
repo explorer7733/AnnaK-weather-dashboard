@@ -22,7 +22,7 @@ To review "AnnaK-weather-dashboard", you can click on the deployed link and the 
 
 ## Deployed link
 
-[deployed link]()
+[deployed link]( https://explorer7733.github.io/AnnaK-weather-dashboard/)
 
 ## Screenshots
 
