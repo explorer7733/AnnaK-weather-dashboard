@@ -16,6 +16,7 @@ const formSubmitHandler = function (event) {
         if (!Array.isArray(cityList)) {
             cityList = [];
         }
+        
         generateButtons(cityName);
         getWeather(cityName);
         cityList.push(cityName);

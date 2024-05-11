@@ -4,7 +4,7 @@
 
 * My motivation was to create a Weather Dashboard application by using a server-side APIs (particularly, OpenWeather API) and continue to practice the skills (addEventListener, localStorage, JSON.parse). 
 
-* I cretaed a Weather Dashboard application according with the provided criteria.
+* I created a Weather Dashboard application according with the provided criteria.
 
 * I learned the following:
 
@@ -26,8 +26,8 @@ To review "AnnaK-weather-dashboard", you can click on the deployed link and the 
 
 ## Screenshots
 
-![]()
-![]()
+![weather today](./assets/Weather%20today%20&%205%20days%20forecast.png)
+![list of cities](./assets/list%20of%20cities&weather%20forecast.png)
 
 ## Credits
 
